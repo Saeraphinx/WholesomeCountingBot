@@ -1,5 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const { token, CountingChannel } = require('./config.json');
+const { token, CountingChannel, devID } = require('./config.json');
 
 const client = new Client({ intents: [ GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages ] });
 
@@ -21,12 +21,12 @@ client.on('messageCreate', m => {
 			if (curr.content.toString().includes((nextNum))) {
 				console.log("valid number");
 			} else {
-				m.author.send(`Hey, you sent an invalid number to <#${m.channelId}>. The next number is **${nextNum}**. If this is in error, please let <@!213074932458979330> know.`)
+				m.author.send(`Hey, you sent an invalid number to <#${m.channelId}>. The next number is **${nextNum}**. If this is in error, please let <@!${devID}> know.`)
 				m.delete();
 			}
 		  })
 		} catch (error) {
-			client.users.fetch('213074932458979330', false).then((user) => {
+			client.users.fetch(devID, false).then((user) => {
 				user.send(`${m.url} caused:\n\`\`\`${error}\`\`\``);
 			   });
 		}
